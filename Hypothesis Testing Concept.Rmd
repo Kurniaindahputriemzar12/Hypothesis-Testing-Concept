@@ -1,0 +1,83 @@
+---
+title: "Untitled"
+author: "Kurnia Indah Putri Emzar"
+date: "11/18/2021"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+
+## Nama : Kurnia Indah Putri Emzar
+
+##1. Make a dataset
+set.seed(1234)
+my_data <- data.frame( name = paste0(rep("M_", 10), 1:10), weight = round(rnorm(10, 20, 2), 1) )
+
+##2. Find summary statistik
+summary(my_data$weight)
+
+#2a.Mean : Mean dari data adalah 19.25 kg 
+#2b.Median : Median dari data adalah 18.90 kg
+
+##3. visualisasi boxplot
+boxplot(my_data$weight,
+        main = "Berat tikus percobaan                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   ",
+        xlab = "Berat Tikus sumber",
+        col = "orange",
+        border = "blue",
+        horizontal = TRUE
+)
+
+##4. visualisasi boxplot
+hist(my_data$weight,
+        main = "Berat tikus percobaan                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   ",
+        xlab = "Berat Tikus sumber",
+        col = "orange",
+        border = "blue",
+        freq = FALSE
+)
+
+##5. Nilai antara mean dan median memiliki perbedaan yang tidak terlalu jauh, tidak ada outlier dan juga dari grafik histogram dan boxplot bahwa persebaran data mendekati simetris skew sehingga mendekati distribusi normal.
+
+##6. Uji one sample t-test (mean=25 kg)
+#Cara 1
+test <- t.test(my_data$weight, mu = 25)
+test 
+
+p_value <- test$p.value
+print(p_value < 0.05)
+
+#Cara 2
+t <- test$statistic
+t_table_1 <- qt(p=0.025, df=11)
+t_table_2 <- qt(p=0.975, df=11)
+
+print((t< t_table_1) | (t> t_table_2))
+
+
+
+##7.## Cara 1 : Didapatkan dari hasil one sample t-test bahwa nilai p_value < 0.05, sehingga H0 ditolak, maka artinya rata-rata berat tikus tidak sama dengan 25 kg.
+##Cara 2 : Nilai t terdapat di daerah kritis, maka Ho ditolak, artinya rata-rata berat tikus pada populasi tidak sama dengan 25 kg
